@@ -1,4 +1,4 @@
-  import { useState } from "react"
+  import { useEffect, useState } from "react"
 
 function App() {
   
@@ -17,6 +17,11 @@ function App() {
       { key:4, value: 'HTML' },
     ]   
  
+      const levels = [
+        {key:'beginner', value:'Başlangıç'},
+        {key:'jr_developer', value:'Jr. Developer'},
+        {key:'sr_developer', value:'Sr. Developer'},
+      ];
 
     const [name, setName] = useState('Abdullah')
 
@@ -27,16 +32,61 @@ function App() {
 
     const [rule,setRule] = useState(true)
 
+    const [rules,setRules] = useState([
+      {key:1, value:'1. kuralı kabul ediyorum', checked: false},
+      {key:2, value:'2. kuralı kabul ediyorum', checked: false},
+      {key:3, value:'3. kuralı kabul ediyorum', checked: true}
+    ])
 
+    const [level,setLevel] = useState('jr_developer')
+
+    const [avatar,setAvatar] = useState(false)
+    const [image,setImage] = useState(false)
+
+    useEffect(() => {
+          if(avatar) {
+            const fileReader = new FileReader()
+
+            fileReader.addEventListener('load', function() {
+               setImage(this.result)
+            })
+      
+            fileReader.readAsDataURL(avatar)
+          }
+    },[avatar])
+
+
+    const checkRule = (key, checked) => {
+      setRules(rules => rules.map(rule => {
+        if(key === rule.key) {
+            rule.checked = checked
+        }
+        return rule
+      }))
+    }
+
+    const submitHandle = () => {
+      const formData = new FormData()
+      formData.append('avatar',avatar)
+      formData.append('name',name)
+      fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        body: formData
+      })
+    }
+ 
    /* 
      Array için örnek
    const selectedGender = genders[gender]; 
    */
 
    const selectedGender = genders.find(g => g.key === gender)
-
+   const selectedLevel = levels.find(l => l.key === level)
 
     const selectedCategories = categories && categoryList.filter(c => categories.includes(c.key))
+
+    const enabled = rules.every(rule => rule.checked) && avatar
+ 
 
 
     return (
@@ -104,8 +154,51 @@ function App() {
 
           <br/>
 
+          {rules.map(rule => (
+              <label key={rule.key}>
+              <input type="checkbox" checked={rule.checked} onChange={e => checkRule(rule.key, e.target.checked) }/>
+              {rule.value}
+            </label> 
+          ))}
 
-          <button disabled={!rule}>Devam Et</button>
+          <br/>
+
+            <pre>
+            {JSON.stringify(rules,null,2)} 
+            </pre>
+
+
+               {levels.map((l,index) => (
+                <label key={index}>
+                  <input type="radio" value={l.key} checked={l.key === level} onChange={e=>setLevel(e.target.value)} />
+                  {l.value}
+                </label>
+               ))} 
+               <br/>
+             {level} 
+
+              
+            {JSON.stringify(selectedLevel)} 
+            
+
+
+            <label>
+                <input type="file" onChange={e => setAvatar(e.target.files[0])} /> 
+                {
+                 /* console.log(e.target.files) */
+                }
+            </label>    
+              
+              <br/>
+              
+              {avatar && (
+                <>
+                <h3>{avatar.name}</h3>
+                {image && <img src={image} alt="" />}
+                </>
+              )}
+
+          <button onClick={submitHandle} disabled={!enabled}>Devam Et</button>
 
       </>
     )
