@@ -1,20 +1,21 @@
-import { createContext, useState,memo, useContext } from "react";
+import { createContext, memo, useContext , useReducer } from "react";
+import { siteReducer } from "../reducers";
 
  const Context = createContext()
  
 const Provider = ({ children }) => {
 
+    const [state, dispatch] = useReducer(siteReducer, {
+        theme: localStorage.getItem('theme') || 'light',
+        language: localStorage.getItem('language') || 'tr'
+    })
+ 
 
-    const [theme, setTheme] = useState('light')
-    const [language, setLanguage] = useState('tr')
-  
     const data  = {
-      theme,
-      setTheme,
-      language,
-      setLanguage
+     ...state,
+     dispatch
     }
-   
+ 
     return (
         <Context.Provider value={data}>
             {children}

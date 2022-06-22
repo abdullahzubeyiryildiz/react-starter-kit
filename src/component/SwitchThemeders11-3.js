@@ -8,7 +8,8 @@ import { useSite } from "./context";
 
    const switchTheme = () => {
         dispatch({
-          type: 'TOOGLE_THEME', 
+          type: 'SWITCH_THEME',
+          value : theme === 'light' ? 'dark' : 'light'
         })
     }
 

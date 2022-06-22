@@ -1,25 +1,20 @@
 import { memo } from "react";
 import SwitchTheme from "./SwitchTheme";
 import SwitchLanguage from "./SwitchLanguage";
-import { useAuth } from "./context";
+import { useAuth } from "./context/AuthContext";
  function Header() {
     console.log('header rendered')
 
-    const { user, dispatch } = useAuth()
+    const { user,setUser } = useAuth()
     const login = () => {
-        dispatch ({
-            type: "LOGIN",
-            payload: {
-                name: 'Abdullah',
-                id: 1
-            }
+        setUser ({
+            name: "Abdullah",
+            id:1 
         })
     }
 
     const logout = () => {
-        dispatch ({
-            type: "LOGOUT", 
-        })
+        setUser (false)
     }
 
     return (

@@ -2,20 +2,12 @@ import { memo } from "react";
 import { useSite } from "./context";
 
  function SwitchLanguage() {
-    const {language, dispatch } = useSite() 
-
-    
-
-    const swicthLanguage = () => {
-        dispatch({
-          type: 'TOOGLE_LANGUAGE', 
-        })
-    }
+    const {language, setLanguage } = useSite() 
  
     return (
             <>
              Mevcut Dil = {language} <br/>
-             <button onClick={swicthLanguage}>Dili Değiştir</button>
+             <button onClick={() => setLanguage(language === 'tr' ? 'en' : 'tr')}>Dili Değiştir</button>
                
         </>
     )

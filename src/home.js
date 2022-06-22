@@ -2,7 +2,7 @@ import { memo } from "react";
 import Header from "./header";
 import Footer from "./Footer";
 
-import { useAuth } from "./context/AuthContext";
+import { useAuth } from "./context";
    
  function Home() { 
     const { user } = useAuth()

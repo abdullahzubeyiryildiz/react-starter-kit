@@ -1,5 +1,6 @@
-import {SiteProvider,AuthProvider} from "./context";
 import Home from "./home";
+import SiteProvider from "./context/SiteContext";
+import AuthProvider from "./context/AuthContext";
 function App() {
  
     return (

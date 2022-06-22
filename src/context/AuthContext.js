@@ -1,15 +1,17 @@
-import { createContext, useState,memo, useContext } from "react";
-
+import { createContext, memo, useContext, useReducer } from "react";
+import { authReducer } from "../reducers";
  const Context = createContext()
  
 const Provider = ({ children }) => {
 
 
-    const [user, setUser] = useState(false) 
+    const [state, dispatch] = useReducer(authReducer, {
+        user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : false
+    }) 
   
     const data  = {
-         user,
-        setUser
+        ...state,
+        dispatch 
     }
    
     return (
