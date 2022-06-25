@@ -1,18 +1,19 @@
-import { createContext, memo, useContext, useReducer } from "react";
-import { authReducer } from "../reducers";
- const Context = createContext()
+import { createContext, useContext, useEffect, useState } from "react"; 
+
+const Context = createContext()
  
-const Provider = ({ children }) => {
-
-
-    const [state, dispatch] = useReducer(authReducer, {
-        user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : false
-    }) 
+export const AuthProvider = ({ children }) => {
+ 
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || false)
   
     const data  = {
-        ...state,
-        dispatch 
+        user,
+        setUser 
     }
+
+    useEffect(() => {
+        localStorage.setItem('user',JSON.stringify(user))
+    },[user])
    
     return (
         <Context.Provider value={data}>
@@ -20,6 +21,4 @@ const Provider = ({ children }) => {
         </Context.Provider>
     )
 } 
-export const useAuth = () => useContext(Context)
- 
-export default memo(Provider)
+export const useAuth = () => useContext(Context) 
