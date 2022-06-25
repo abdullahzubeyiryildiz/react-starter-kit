@@ -4,7 +4,7 @@ import { url } from "./utils";
 function App() {   
    // console.log(generatePath('post/:id/:url', {id:2,url: 'test-url'}))
 
-  console.log(url('home.blog.categories'))
+   console.log(url('home.blog.categories'))
   return useRoutes(routes)  
 }
 
