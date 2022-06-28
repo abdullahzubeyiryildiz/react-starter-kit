@@ -1,6 +1,6 @@
 import { useAuth } from "../../context/AuthContext";
-import { useNavigate, useLocation } from "react-router-dom";
- 
+import { useNavigate, useLocation } from "react-router-dom"; 
+import { useFormik } from "formik";
 export default function Login() {
     const navigate = useNavigate()
     const location = useLocation()
@@ -18,10 +18,27 @@ export default function Login() {
             }
         })
     }
+
+    const { handleSubmit,handleChange, values } = useFormik({
+        initialValues: {
+            username: '',
+            password: ''
+        },
+        onSubmit: values => {
+            console.log(values)
+        }
+
+    })
     return (
-         <div>
+         <div> 
             <h3>Login Sayfası</h3>  
-            <button onClick={loginHandle}>Giriş Yap</button>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="username">Kulllanıcı Adı</label>
+                <input type="text" id="username" value={values.username} onChange={handleChange} /> <br/>
+                <label htmlFor="password">Parola</label>
+                <input type="text" id="password" value={values.password} onChange={handleChange} />
+                 <button type="submit">Giriş Yap</button>
+          </form>
          </div> 
     )
 }
