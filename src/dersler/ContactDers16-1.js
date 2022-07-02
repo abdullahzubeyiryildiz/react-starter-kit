@@ -1,10 +1,5 @@
 import { Helmet } from "react-helmet";
 import { Formik,Form,Field } from "formik";
-import Input from "../components/form/Input";
-import File from "../components/form/File";
-import Checkbox from "../components/form/Checkbox";
-import Textarea from "../components/form/Textarea";
-import Select from "../components/form/Select";
 export default function Contact() {
     return (
          <div>
@@ -15,7 +10,7 @@ export default function Contact() {
             <Formik 
                 initialValues = {{
                     name:'Abdullah',
-                    about: 'Hakkımda Yazısı',
+                    about: 'asdas asdsad',
                     accept: false,
                     gender:2,
                     avatar: '',
@@ -28,25 +23,26 @@ export default function Contact() {
                 >
 
                  {({values}) => (
-                    <Form className="p-6">
-                        <Input label="Ad-Soyad" name="name" /> <br /> 
-                        <Textarea label="Hakkımda"  cols={20} rows={10}  name="about" defaultValue="Hakıımda Yazısı"  />
-                        <Checkbox label="Kuralları Kabul Ediyorum!" name="accept" /> <br /><br />
- 
-                        <Select label="Cinsiyet" name="gender" options={[
-                            { key:1, value:'Kadın' },
-                            { key:2, value:'Erkek' }
-                        ]}/> <br /><br />
+                    <Form>
+                        <Field name="name" /> <br />
+                        <Field component="textarea" cols={50} rows={20} name="about" /> <br />
+
+                        <label> 
+                        <Field type="checkbox" name="accept" />
+                        Kuralları Kabul Ediyorum!
+                        </label>  <br /> <br />
+                        <Field component="select" name="gender">
+                            <option value={1}>Kadın</option>
+                            <option value={2}>Erkek</option>
+                        </Field>
                         <Field component="select" name="skills" multiple={true}>
                             <option value="php">PHP</option>
                             <option value="css">CSS</option>
                             <option value="js">JavaScript</option>
                             <option value="html">HTML</option>
-                        </Field> 
-                        <File label="Avatar" type="file" name="avatar" />
+                        </Field>
+                        <Field type="file" name="avatar" />
                         <button disabled={!values.accept} type="submit">Gönder</button>
-
-                        <pre>{JSON.stringify(values, null, 2)}</pre>
                     </Form>
                  )}   
             </Formik>
