@@ -1,10 +1,10 @@
-import { useField, Field, ErrorMessage } from "formik";
+import { useField,Field,ErrorMessage } from "formik";
  
-export default function Select({label, options, original = false, ...props}) {
+export default function MultiSelect({label, options, original = false, ...props}) {
  
     const [field, meta, helpers] = useField(props) 
-    
-    const changeHandle = e => {   
+
+    const changeHandle = e => { 
         let selected;
          
         if(props.multiple) { 
@@ -15,15 +15,14 @@ export default function Select({label, options, original = false, ...props}) {
             selected = options.find((option) => option.key ===  e.target.value);
             helpers.setValue(original ? selected : e.target.value) 
         }
- 
+       
     } 
 
     return (
         <label className="block w-full">
             <div className="text-sm text-gray-600">{label}</div>
             <select className="w-full h-10 border-b outline-none focus:border-black" onChange={changeHandle} defaultValue={field.value} {...props} >
-               <option value="">Seçin</option>
-                {options.map((option, key) => (
+                {options.map((option, key) => ( 
                     <option value={option.key} key={key}>{option.value}</option>
                 ))}
             </select>

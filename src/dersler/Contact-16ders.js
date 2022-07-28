@@ -27,13 +27,15 @@ export default function Contact() {
                 <title>İletişim Title</title> 
             </Helmet>
             <h3>İletişim</h3>
-            <Formik initialValues = {{
+            <Formik 
+                initialValues = {{
                     code : ''
                 }} 
                 validationSchema={SampleSchema}
                 onSubmit={values => {
                     console.log(values)
-                }} >
+                }} 
+                >
                     {({values}) => (
                          <Form className="p-4 m-4 hidden shadow-lg grid gap-y-4 border rounded">
                             <Input label="Kodu Girin" name="code" />
@@ -45,13 +47,14 @@ export default function Contact() {
 
             <Formik 
                 initialValues = {{
-                    name:'',
-                    about: '',
+                    name:'Abdullah',
+                    about: 'Hakkımda Yazısı',
                     accept: false,
                     gender:2,
                     avatar: '',
-                    skills: [],
-                    level : '' 
+                    skills: ['html','css'],
+                    level : 'sr'
+                  //  skills: []
                 }}
                 onSubmit={values => {
                     console.log(values)
@@ -59,16 +62,16 @@ export default function Contact() {
                 validationSchema={ContactSchema}
                 >
 
-                 {({values, errors}) => (
+                 {({values}) => (
                     <Form className="p-4 m-4 shadow-lg grid gap-y-4 border rounded">
                         <Input label="Ad-Soyad" name="name" /> <br /> 
                         <Textarea label="Hakkımda"  cols={20} rows={10}  name="about"  />
-                        <Checkbox label="Kuralları Kabul Ediyorum!" name="accept" />
+                        <Checkbox label="Kuralları Kabul Ediyorum!" name="accept" /> <br /><br />
  
-                        <Select label="Cinsiyet" name="gender" original={false} options={[ 
+                        <Select label="Cinsiyet" name="gender" original={false} options={[
                             { key:1, value:'Kadın' },
                             { key:2, value:'Erkek' }
-                        ]}/>
+                        ]}/> <br /><br />
                        
                         <MultiSelect label="Skills" name="skills" multiple original={false} options={[
                             { key:"php", value:'PHP' },
@@ -87,8 +90,6 @@ export default function Contact() {
                         <button className="h-10 rounded bg-black text-sm text-white px-5" disabled={!values.accept} type="submit">Gönder</button>
 
                         <pre>{JSON.stringify(values, null, 2)}</pre>
-                        <pre>{JSON.stringify(errors, null, 2)}</pre>
-                        
                     </Form>
                  )}   
             </Formik>
